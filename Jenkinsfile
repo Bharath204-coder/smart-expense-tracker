@@ -13,20 +13,20 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo "Building backedn and frontend iamges..."
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
 
         stage('Stop Existing containers') {
             steps {
                 echo "Stopping old containers..."
-                sh 'docker-compose down'
+                sh 'docker compose down'
             }
         }
         stage('Deploy Application') {
             steps {
                 echo "Starting new containers..."
-                sh 'docker-compose up -d'
+                sh 'docker compose up -d'
             }
         }
 
