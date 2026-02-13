@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: expense-postgres
+    environment:
+      POSTGRES_DB: expense_db
+      POSTGRES_USER: expense_user
+      POSTGRES_PASSWORD: expense_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: expense-backend
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://expense_user:expense_pass@postgres:5432/expense_db
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: expense-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
