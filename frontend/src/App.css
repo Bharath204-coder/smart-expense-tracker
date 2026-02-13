@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  backdrop-filter: blur(10px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: rgba(31, 41, 55, 0.95);
+  color: white;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+
+.sidebar h2 {
+  margin-bottom: 40px;
+}
+
+.sidebar p {
+  margin: 15px 0;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.sidebar p:hover {
+  opacity: 1;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 25px 0 0 25px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  margin-bottom: 25px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Form */
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  flex: 1;
+}
+
+/* Buttons */
+button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Expense row */
+.expense-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* DARK MODE */
+.dark {
+  background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+.dark .main {
+  background: rgba(17, 24, 39, 0.9);
+  color: white;
+}
+
+.dark .card {
+  background: rgba(31, 41, 55, 0.85);
+  color: white;
+}
+
+.dark input,
+.dark select {
+  background: #374151;
+  color: white;
+  border: 1px solid #555;
+}
