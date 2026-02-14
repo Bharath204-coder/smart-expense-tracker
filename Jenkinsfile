@@ -1,36 +1,48 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_USER = "bharathcm"
+        IMAGE_BACKEND = "expense-backend"
+        IMAGE_FRONTEND = "expense-frontend"
+    }
+
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Bharath204-coder/smart-expense-tracker.git'
+                checkout scm
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Backend Image') {
             steps {
-                sh 'docker-compose build'
+                sh 'docker build -t $DOCKERHUB_USER/$IMAGE_BACKEND:latest ./backend'
             }
         }
 
-        stage('Stop Existing Containers') {
+        stage('Build Frontend Image') {
             steps {
-                sh 'docker-compose down'
+                sh 'docker build -t $DOCKERHUB_USER/$IMAGE_FRONTEND:latest ./frontend'
             }
         }
 
-        stage('Deploy Application') {
+        stage('Login to DockerHub') {
             steps {
-                sh 'docker-compose up -d'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD'
+                )]) {
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                }
             }
         }
 
-        stage('Verify Deployment') {
+        stage('Push Images') {
             steps {
-                sh 'docker ps'
+                sh 'docker push $DOCKERHUB_USER/$IMAGE_BACKEND:latest'
+                sh 'docker push $DOCKERHUB_USER/$IMAGE_FRONTEND:latest'
             }
         }
     }
